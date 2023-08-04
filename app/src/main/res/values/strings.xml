@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RoutePlanner</string>
+
+    <string name="general_retry">Retry</string>
+    <string name="error_no_connection">No connection</string>
+    <string name="error_generic">Something went wrong…</string>
+    <string name="error_no_connection_desc">No connection</string>
+    <string name="error_generic_desc">API Error</string>
+
+    <string name="appbar_title">Routes</string>
+
+    <string name="drawer_title">A demo app TODO TODO
+        \n\nTODO TODO
+        \n\nTODO TODO
+        \n\nTODO TODO
+        \n\nTODO TODO
+    </string>
+
+    <string name="dark_mode">Dark Mode</string>
+</resources>
