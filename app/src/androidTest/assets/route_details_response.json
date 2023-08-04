@@ -1,0 +1,58 @@
+{
+  "id": "t9rQOlhUQyXRxVa0SwAj",
+  "name": "Batchelder bus 54",
+  "stops": [
+    {
+      "id": "52517997-c7ab-4dc6-9ccd-d88185e4a91c",
+      "coord": {
+        "lat": 42.34994972026237,
+        "lng": -71.12029942982345
+      },
+      "students": []
+    },
+    {
+      "id": "f3aa8f03-f98f-4316-925f-76ef44fd9a6e",
+      "coord": {
+        "lat": 42.35150316603465,
+        "lng": -71.10718141635496
+      },
+      "students": []
+    },
+    {
+      "id": "98921042-04b9-4c1e-94a8-cd62b45ea3e1",
+      "coord": {
+        "lat": 42.350757698703816,
+        "lng": -71.09799787625732
+      },
+      "students": [
+        {
+          "id": "2id6MAex6Pr9S54R4LaoKdx8mHZO",
+          "name": "John Smith",
+          "grade": "4"
+        }
+      ]
+    },
+    {
+      "id": "289941b9-c541-4652-87ab-ba0a21dd9052",
+      "coord": {
+        "lat": 42.35124046970778,
+        "lng": -71.090586234398
+      },
+      "students": []
+    },
+    {
+      "id": "4010b2e8-9767-4bff-990c-e45d36089692",
+      "coord": {
+        "lat": 42.3589542671015,
+        "lng": -71.07214873130319
+      },
+      "students": [
+        {
+          "id": "rl42E3TvMbYt47J7IZCWjyYLc1FN",
+          "name": "Emma Smith",
+          "grade": "11"
+        }
+      ]
+    }
+  ]
+}
