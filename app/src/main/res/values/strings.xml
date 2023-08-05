@@ -17,4 +17,15 @@
     </string>
 
     <string name="dark_mode">Dark Mode</string>
+
+
+    <!-- Route details-->
+    <string name="sub_students_count">%d students</string>
+    <string name="sub_details_stops_students">%d stops, %d students"</string>
+    <string name="step_fallback">"Continue for %s</string>
+    <string name="student_desc_grade">Grade %d</string>
+    <string name="time_students_desc_count_one">%s, 1 student</string>
+    <string name="time_students_desc_count_multiple">%s, %d students</string>
+    <string name="details_loading_routing">Loading routing…</string>
+
 </resources>
