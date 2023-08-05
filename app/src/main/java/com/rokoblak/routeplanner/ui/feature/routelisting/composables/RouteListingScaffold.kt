@@ -45,13 +45,9 @@ fun RouteListingScaffold(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            val coroutineScope = rememberCoroutineScope()
             ModalDrawerSheet {
                 RouteListingDrawer(state.drawer) {
-                    coroutineScope.launch {
-                        drawerState.close()
-                        onAction(it)
-                    }
+                    onAction(it)
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.rokoblak.routeplanner.ui.feature.routelisting.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import com.rokoblak.routeplanner.ui.theme.alpha
 
 
 const val TAG_DRAWER = "tag-drawer"
+const val TAG_SWITCH_USE_SYSTEM_THEME = "tag-switch-use-system-theme"
 const val TAG_SWITCH_DARK_MODE = "tag-switch-dark-mode"
 
 data class RouteListingDrawerUIState(
@@ -64,26 +66,47 @@ fun RouteListingDrawer(
         ) {
             Row(
                 Modifier
-                    .wrapContentWidth()
+                    .fillMaxWidth()
                     .padding(2.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    stringResource(id = R.string.dark_mode),
+                    stringResource(id = R.string.use_system_theme),
                     style = MaterialTheme.typography.labelLarge,
                 )
-
-                Spacer(Modifier.width(12.dp))
                 Switch(
-                    modifier = Modifier.semantics { testTag = TAG_SWITCH_DARK_MODE },
-                    checked = state.darkMode ?: isSystemInDarkTheme(),
+                    modifier = Modifier.semantics { testTag = TAG_SWITCH_USE_SYSTEM_THEME },
+                    checked = state.darkMode == null,
                     colors = SwitchDefaults.colors(),
                     onCheckedChange = { enabled ->
-                        onAction(RouteListingAction.SetDarkMode(enabled))
+                        val newDarkMode = if (enabled) null else (state.darkMode ?: false)
+                        onAction(RouteListingAction.SetDarkMode(newDarkMode))
                     },
                 )
+            }
+            AnimatedVisibility(visible = state.darkMode != null) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        stringResource(id = R.string.dark_mode),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                    Switch(
+                        modifier = Modifier.semantics { testTag = TAG_SWITCH_DARK_MODE },
+                        checked = state.darkMode ?: false,
+                        enabled = state.darkMode != null,
+                        colors = SwitchDefaults.colors(),
+                        onCheckedChange = { enabled ->
+                            onAction(RouteListingAction.SetDarkMode(enabled))
+                        },
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(24.dp))
             Text(
@@ -98,7 +121,7 @@ fun RouteListingDrawer(
 @Preview
 @Composable
 private fun ListingDrawerPreview() {
-    val darkMode = false
+    val darkMode: Boolean? = null
     RoutePlannerTheme(overrideDarkMode = darkMode) {
         RouteListingDrawer(
             RouteListingDrawerUIState(

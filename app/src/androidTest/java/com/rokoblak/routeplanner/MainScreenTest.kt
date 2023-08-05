@@ -1,17 +1,15 @@
 package com.rokoblak.routeplanner
 
-import android.content.Context
-import android.content.res.Configuration
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.test.core.app.ApplicationProvider
 import com.rokoblak.routeplanner.ui.feature.routelisting.composables.TAG_DRAWER
 import com.rokoblak.routeplanner.ui.feature.routelisting.composables.TAG_NAV_BUTTON
 import com.rokoblak.routeplanner.ui.feature.routelisting.composables.TAG_SWITCH_DARK_MODE
+import com.rokoblak.routeplanner.ui.feature.routelisting.composables.TAG_SWITCH_USE_SYSTEM_THEME
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
@@ -48,26 +46,17 @@ class MainScreenTest {
 
         composeTestRule.onNodeWithTag(TAG_DRAWER).assertIsDisplayed()
 
-        composeTestRule.onNodeWithTag(TAG_SWITCH_DARK_MODE).let {
-            // The data is cleared after each test, but we do initialize the switch to current device dark mode state
-            val deviceInNightMode = isDeviceInNightMode()
-            if (deviceInNightMode) {
-                it.assertIsOn()
-            } else {
-                it.assertIsOff()
-            }
+        composeTestRule.onNodeWithTag(TAG_SWITCH_USE_SYSTEM_THEME).let {
+            it.assertIsOn()
             it.performClick()
-            if (deviceInNightMode) {
-                it.assertIsOff()
-            } else {
-                it.assertIsOn()
-            }
+            it.assertIsOff()
         }
-    }
 
-    private fun isDeviceInNightMode(): Boolean {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val currentMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return currentMode == Configuration.UI_MODE_NIGHT_YES
+        composeTestRule.onNodeWithTag(TAG_SWITCH_DARK_MODE).let {
+            it.assertIsDisplayed()
+            it.assertIsOff()
+            it.performClick()
+            it.assertIsOn()
+        }
     }
 }
