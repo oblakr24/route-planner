@@ -23,10 +23,10 @@ class MainViewModelTest {
 
     @Test
     fun testMappingWorksCorrectly() = coroutineTestRule.runTest {
-        val storage: DarkModeHandlingUseCase = mockk()
-        every { storage.darkModeEnabled() } returns flowOf(true)
+        val usecase: DarkModeHandlingUseCase = mockk()
+        every { usecase.darkModeEnabled() } returns flowOf(true)
 
-        val vm = MainViewModel(storage)
+        val vm = MainViewModel(usecase)
 
         vm.uiState.test {
             assertEquals(MainScreenUIState(isDarkTheme = true), awaitItem())

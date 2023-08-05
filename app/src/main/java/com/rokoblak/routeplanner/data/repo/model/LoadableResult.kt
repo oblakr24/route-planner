@@ -1,10 +1,12 @@
 package com.rokoblak.routeplanner.data.repo.model
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
+@OptIn(ExperimentalCoroutinesApi::class)
 sealed interface LoadableResult<out T> {
     data class Success<T>(val value: T) : LoadableResult<T>
     data class Error(val type: LoadErrorType) : LoadableResult<Nothing>

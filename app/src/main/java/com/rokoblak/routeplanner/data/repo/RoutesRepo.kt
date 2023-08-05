@@ -87,12 +87,12 @@ class AppRoutesRepo @Inject constructor(
         when (res) {
             is CallResult.Error -> Unit
             is CallResult.Success -> {
-                loadedPagesStorage.update { page ->
-                    if (page == null) {
+                loadedPagesStorage.update { storedPage ->
+                    if (storedPage == null) {
                         res.value
                     } else {
                         RoutesPage(
-                            routes = page.routes + res.value.routes,
+                            routes = storedPage.routes + res.value.routes,
                             page = res.value.page,
                             end = res.value.end,
                         )
