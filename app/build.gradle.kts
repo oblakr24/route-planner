@@ -30,7 +30,6 @@ android {
             val mapsApiKey = prop.getProperty("MAPS_API_KEY", "") ?: ""
             manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
 
-
             val geoapifyApiKey = prop.getProperty("GEOAPIFY_API_KEY", "") ?: ""
             buildConfigField("String", "GEOAPIFY_API_KEY", "\"" + geoapifyApiKey + "\"")
 
@@ -88,7 +87,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-
     // Compose constraint layout
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     // Compose extended material icons
@@ -100,36 +98,24 @@ dependencies {
     val navVersion = "2.6.0"
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$composeHiltNavVersion")
-
+    // Maps Compose
     implementation("com.google.maps.android:maps-compose:2.12.0")
-
-    // Make sure to also include the latest version of the Maps SDK for Android
-    // See latest version at https://goo.gle/android-maps-sdk-version
-
-    // Optionally, you can include the Compose utils library for Clustering, etc.
     implementation("com.google.maps.android:maps-compose-utils:2.12.0")
-
-    // Optionally, you can include the widgets library for ScaleBar, etc.
     implementation("com.google.maps.android:maps-compose-widgets:2.12.0")
 
     // Hilt
     val hiltVersion = "2.46.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-
     // Timber
     val timberVersion = "5.0.1"
     implementation("com.jakewharton.timber:timber:$timberVersion")
-
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
     // KotlinX immutable collections
     api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-
     // Java8 desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
-
     // KotlinX Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
@@ -143,6 +129,11 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
+    // Turbine
+    testImplementation("app.cash.turbine:turbine:0.13.0")
+
+    implementation("androidx.tracing:tracing:1.1.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -150,6 +141,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
+
+    testImplementation("io.mockk:mockk:1.13.5")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
+    api("androidx.arch.core:core-testing:2.2.0")
 }
 
 // Allow references to generated code
