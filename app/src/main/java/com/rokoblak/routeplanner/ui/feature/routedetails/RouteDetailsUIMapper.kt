@@ -36,8 +36,16 @@ object RouteDetailsUIMapper {
             } else {
                 legs.getOrNull(idx)?.studentsToPickUpAtEnd
             }?.size ?: 0
-            val subtitle = if (studentsCount > 0) TextRes.Res.create(R.string.sub_students_count, studentsCount) else null
-            RouteContentUIState.Loaded.Point(pt.lat, pt.long, pt.name?.let { TextRes.Text(it) }, subtitle = subtitle)
+            val subtitle = if (studentsCount > 0) TextRes.Res.create(
+                R.string.sub_students_count,
+                studentsCount
+            ) else null
+            RouteContentUIState.Loaded.Point(
+                pt.lat,
+                pt.long,
+                pt.name?.let { TextRes.Text(it) },
+                subtitle = subtitle
+            )
         }
 
         val listing = if (legs.isNotEmpty()) {
@@ -58,11 +66,14 @@ object RouteDetailsUIMapper {
             null
         }
 
-        val subtitle = TextRes.Res.create(R.string.sub_details_stops_students, route.stops.size, totalStudents)
+        val subtitle =
+            TextRes.Res.create(R.string.sub_details_stops_students, route.stops.size, totalStudents)
         val extraSubtitle = if (distanceInM != null && totalTime != null) {
             TextRes.Text(formatDistanceAndTime(distanceInM, totalTime))
         } else {
-            if (details.loadingRouting) TextRes.Res(R.string.details_loading_routing) else TextRes.Text("")
+            if (details.loadingRouting) TextRes.Res(R.string.details_loading_routing) else TextRes.Text(
+                ""
+            )
         }
 
         val header = RouteHeaderDisplayData(
@@ -113,14 +124,16 @@ object RouteDetailsUIMapper {
     private fun Student.toUI() = StudentDisplayData(
         id = id,
         name = name,
-        subtitle = grade?.let { TextRes.Res.create(R.string.student_desc_grade, id) }
+        subtitle = grade?.let { TextRes.Res.create(R.string.student_desc_grade, it) }
     )
 
     private fun LegStep.toUI() = StepDisplayData(
         id = id,
         name = name,
-        instruction = instruction,
-        subtitle = TextRes.Text(formatDistanceAndTime(distanceInM, time)),
+        instruction = instruction.takeIf { it.isNotBlank() },
+        subtitle = formatDistanceAndTime(distanceInM, time).let {
+            if (it.isNotBlank()) TextRes.Text(it) else null
+        },
         fallbackName = if (name.isBlank() && instruction.isBlank()) {
             TextRes.Res.create(R.string.step_fallback, metersToDisplay(distanceInM))
         } else {

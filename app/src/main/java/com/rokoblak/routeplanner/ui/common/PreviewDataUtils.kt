@@ -50,7 +50,7 @@ object PreviewDataUtils {
         name = "$idx: Commonwealth Avenue",
         instruction = "Turn left at X",
         subtitle = TextRes.Text("800m (2:34s)"),
-        fallbackName = TextRes.Text(""),
+        fallbackName = null,
     )
 
     fun leg(idx: Int = 1) = LegDisplayData(
