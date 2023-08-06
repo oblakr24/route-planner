@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -56,7 +57,17 @@ fun RouteListingDrawer(
             text = stringResource(id = R.string.drawer_title),
             style = MaterialTheme.typography.labelMedium,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+        if (BuildConfig.HAS_API_KEYS.not()) {
+            Text(
+                modifier = Modifier.padding(12.dp),
+                text = stringResource(id = R.string.no_keys_warning),
+                color = Color.Red,
+                style = MaterialTheme.typography.labelMedium,
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
         Spacer(modifier = Modifier.weight(1f))
         Column(
             Modifier

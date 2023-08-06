@@ -44,7 +44,7 @@ fun RouteDetailsItemsListing(
 
     val cameraPositionState = rememberCameraPositionState {
         val center = LatLng(headerDisplayData.center.lat, headerDisplayData.center.long)
-        position = CameraPosition.fromLatLngZoom(center, 12f)
+        position = CameraPosition.fromLatLngZoom(center, 12.5f)
     }
 
     var interactingWithMap by remember {

@@ -30,7 +30,7 @@ object RoutesModelMapper {
             linePoints.map { pt ->
                 RoutePoint(lat = pt.lat, long = pt.lon)
             }
-        }.flatten()
+        }
 
         val nextLegNames = result.legs.mapIndexed { idx, leg ->
             idx-1 to leg.steps.firstOrNull()?.name

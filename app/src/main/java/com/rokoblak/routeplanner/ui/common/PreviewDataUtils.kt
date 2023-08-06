@@ -5,10 +5,12 @@ import com.rokoblak.routeplanner.ui.feature.routedetails.composables.LegSection
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteContentUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteHeaderDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteLegsListingData
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsData
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsDisplay
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteScaffoldUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.StepDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.StudentDisplayData
 import com.rokoblak.routeplanner.ui.feature.routelisting.composables.RouteDisplayData
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 
@@ -36,9 +38,36 @@ object PreviewDataUtils {
         }.toImmutableList()
     )
 
+    fun routeMapsData() = RouteMapsData(
+        center = RouteMapsData.Point(-1.0, -1.0),
+        polylines = emptyList(),
+        markers = emptyList(),
+    )
+
+    fun detailsScaffoldData() = RouteScaffoldUIState(
+        title = "Route name",
+        subtitle = TextRes.Text("Subtitle"),
+        mainContent = RouteScaffoldUIState.MainContentState.Loaded(routeMapsData()),
+        sheetContent = legsListing,
+    )
+
+    fun detailsScaffoldDataLoading() = RouteScaffoldUIState(
+        title = "Route name",
+        subtitle = TextRes.Text("Subtitle"),
+        mainContent = RouteScaffoldUIState.MainContentState.Loading,
+        sheetContent = null,
+    )
+
+    fun detailsScaffoldDataError() = RouteScaffoldUIState(
+        title = "Route name",
+        subtitle = TextRes.Text("Subtitle"),
+        mainContent = RouteScaffoldUIState.MainContentState.Error(type = RouteScaffoldUIState.MainContentState.Error.Type.NoKeys),
+        sheetContent = null,
+    )
+
     fun routeHeader() = RouteHeaderDisplayData(
-        center = RouteContentUIState.Loaded.Point(-1.0, -1.0),
-        polyline = emptyList(),
+        center = RouteHeaderDisplayData.Point(-1.0, -1.0),
+        polylines = emptyList(),
         markers = emptyList(),
         subtitle = TextRes.Text("Subtitle"),
         extraSubtitle = TextRes.Text("Extra subtitle"),

@@ -6,7 +6,7 @@ data class ExpandedRouteDetails(
     val route: RouteDetails,
     val firstPoint: RoutePoint,
     val waypoints: List<RoutePoint>,
-    val pathPoints: List<RoutePoint>,
+    val pathPoints: List<List<RoutePoint>>,
     val studentsToPickUpAtStart: List<Student>,
     val legs: List<Leg>,
     val loadingRouting: Boolean,

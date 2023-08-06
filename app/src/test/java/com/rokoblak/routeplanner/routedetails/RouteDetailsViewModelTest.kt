@@ -7,7 +7,6 @@ import com.rokoblak.routeplanner.data.repo.model.LoadableResult
 import com.rokoblak.routeplanner.domain.model.ExpandedRouteDetails
 import com.rokoblak.routeplanner.domain.model.RouteDetails
 import com.rokoblak.routeplanner.domain.model.RoutePoint
-import com.rokoblak.routeplanner.domain.model.RoutesListing
 import com.rokoblak.routeplanner.domain.usecases.RouteDetailsUseCase
 import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsAction
@@ -15,18 +14,13 @@ import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsViewModel
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteContentUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteHeaderDisplayData
-import com.rokoblak.routeplanner.ui.feature.routelisting.RouteListingAction
-import com.rokoblak.routeplanner.ui.feature.routelisting.composables.RouteListingScaffoldUIState
-import com.rokoblak.routeplanner.ui.feature.routelisting.composables.RoutesListingData
 import com.rokoblak.routeplanner.util.TestCoroutineRule
 import com.rokoblak.routeplanner.util.TestUtils
 import com.rokoblak.routeplanner.util.awaitItem
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -122,7 +116,7 @@ class RouteDetailsViewModelTest {
 
             assertEquals(
                 expectedError,
-                awaitItem { it.inner != RouteContentUIState.Loading })
+                awaitItem { it.content != RouteContentUIState.Loading })
 
             vm.onAction(RouteDetailsAction.RetryClicked)
 
@@ -130,9 +124,9 @@ class RouteDetailsViewModelTest {
                 RouteContentUIState.Loaded(
                     header = RouteHeaderDisplayData(
                         showNoKeysWarning = false,
-                        center = RouteContentUIState.Loaded.Point(0.0, 0.0),
+                        center = RouteHeaderDisplayData.Point(0.0, 0.0),
                         markers = emptyList(),
-                        polyline = emptyList(),
+                        polylines = emptyList(),
                         subtitle = TextRes.Res(R.string.sub_details_stops_students, listOf(1, 0)),
                         extraSubtitle = TextRes.Res(R.string.details_loading_routing),
                     ),
@@ -143,7 +137,7 @@ class RouteDetailsViewModelTest {
 
             assertEquals(
                 expectedAfterRetry,
-                awaitItem { it.inner is RouteContentUIState.Loaded })
+                awaitItem { it.content is RouteContentUIState.Loaded })
         }
     }
 

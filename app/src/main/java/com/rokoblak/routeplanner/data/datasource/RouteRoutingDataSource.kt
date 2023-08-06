@@ -48,10 +48,7 @@ class AppRouteRoutingDataSource @Inject constructor(
         waypoints: List<RoutePoint>,
         studentsPerIdx: Map<Int, List<Student>>
     ) = CallResult.wrappedSafeCall {
-        val joinedWaypoints = waypoints.joinToString(separator = "|") {
-            "${it.lat},${it.long}"
-        }
-        routingApi.loadRouting(waypoints = joinedWaypoints, apiKey = BuildConfig.GEOAPIFY_API_KEY)
+        routingApi.loadRouting(waypoints = waypoints.createQuery(), apiKey = BuildConfig.GEOAPIFY_API_KEY)
     }.flatMap {
 
         val idxToPoints = waypoints.withIndex().associate { (idx, pt) -> idx to pt }
@@ -59,4 +56,6 @@ class AppRouteRoutingDataSource @Inject constructor(
             ?: return@flatMap CallResult.Error(LoadErrorType.ApiError("No results in response"))
         CallResult.Success(result)
     }
+
+    private fun List<RoutePoint>.createQuery() = joinToString(separator = "|") { "${it.lat},${it.long}" }
 }

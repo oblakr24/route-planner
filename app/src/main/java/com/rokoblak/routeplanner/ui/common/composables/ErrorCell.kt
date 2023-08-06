@@ -20,12 +20,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.rokoblak.routeplanner.R
 import com.rokoblak.routeplanner.ui.common.AppThemePreviews
+import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.theme.ButtonBg
 import com.rokoblak.routeplanner.ui.theme.RoutePlannerTheme
 
 @Composable
 fun ErrorCell(
-    isNoConnection: Boolean,
+    title: TextRes,
+    subtitle: TextRes,
     modifier: Modifier = Modifier,
     onRetryClicked: () -> Unit
 ) {
@@ -40,18 +42,18 @@ fun ErrorCell(
 
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = stringResource(id = if (isNoConnection) R.string.error_no_connection else R.string.error_generic),
+            text = title.resolve(),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = if (isNoConnection) R.string.error_no_connection_desc else R.string.error_generic_desc),
+            text = subtitle.resolve(),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Spacer(modifier = Modifier.height(48.dp))
-        // Could be extracted in a default composable if decided to use generically in the app
+
         Button(
             onClick = onRetryClicked,
             border = BorderStroke(1.dp, ButtonBg),
@@ -73,6 +75,7 @@ fun ErrorCell(
 @Composable
 fun ErrorDisplayPreview() {
     RoutePlannerTheme {
-        ErrorCell(isNoConnection = false, onRetryClicked = {})
+        ErrorCell(title = TextRes.Res(R.string.error_keys_missing),
+            subtitle = TextRes.Res(R.string.no_keys_warning), onRetryClicked = {})
     }
 }

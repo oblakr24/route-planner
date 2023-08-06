@@ -64,7 +64,7 @@ class AppRouteDetailsRepo @Inject constructor(
             val stopName = routingDetails?.legs?.getOrNull(idx-1)?.name ?: routingDetails?.startName ?: "Start"
             RoutePoint(lat = stop.coord.lat, long = stop.coord.long, name = stopName)
         }
-        val pathPoints = routingDetails?.points ?: waypoints
+        val pathPoints = routingDetails?.points ?: listOf(waypoints)
 
         val studentsToPickUpAtStart = details.stops.first().students
 

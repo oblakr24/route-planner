@@ -11,6 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import com.rokoblak.routeplanner.R
+import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.common.composables.ErrorCell
 import com.rokoblak.routeplanner.ui.common.composables.LoadingCell
 import com.rokoblak.routeplanner.ui.common.verticalScrollbar
@@ -32,7 +34,8 @@ sealed interface RoutesListingData {
 fun RoutesListing(data: RoutesListingData, onAction: (RouteListingAction) -> Unit) {
     when (data) {
         is RoutesListingData.Error -> {
-            ErrorCell(isNoConnection = data.isNoConnection) {
+            ErrorCell(title = TextRes.Res(R.string.error_generic_desc),
+                subtitle = TextRes.Res(R.string.error_generic_desc)) {
                 onAction(RouteListingAction.RefreshTriggered)
             }
         }

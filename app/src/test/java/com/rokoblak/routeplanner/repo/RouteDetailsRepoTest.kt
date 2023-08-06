@@ -44,7 +44,7 @@ class RouteDetailsRepoTest {
     )
 
     private val mockRoutingDetails = RouteRoutingDetails(
-        points = listOf(RoutePoint(0.0, 0.0, name = "Pt1 name")),
+        points = listOf(listOf(RoutePoint(0.0, 0.0, name = "Pt1 name"))),
         time = Duration.ofSeconds(10),
         distanceInM = 123,
         legs = listOf(),
@@ -103,8 +103,8 @@ class RouteDetailsRepoTest {
                 ExpandedRouteDetails(
                     route = mockDetails,
                     firstPoint = RoutePoint(0.0, 0.0),
-                    waypoints = listOf(RoutePoint(0.0, 0.0, name = "Start")),
-                    pathPoints = listOf(RoutePoint(0.0, 0.0, name = "Start")),
+                    waypoints = listOf(RoutePoint(0.0, 0.0, "Start")),
+                    pathPoints = listOf(listOf(RoutePoint(0.0, 0.0, "Start"))),
                     studentsToPickUpAtStart = emptyList(),
                     legs = emptyList(),
                     loadingRouting = true,
@@ -121,7 +121,7 @@ class RouteDetailsRepoTest {
                     route = mockDetails,
                     firstPoint = RoutePoint(0.0, 0.0),
                     waypoints = listOf(RoutePoint(0.0, 0.0, name = "Start pt name")),
-                    pathPoints = listOf(RoutePoint(0.0, 0.0, name = "Pt1 name")),
+                    pathPoints = listOf(listOf(RoutePoint(0.0, 0.0, name = "Pt1 name"))),
                     studentsToPickUpAtStart = emptyList(),
                     legs = emptyList(),
                     loadingRouting = false,

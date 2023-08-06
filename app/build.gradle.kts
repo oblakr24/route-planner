@@ -86,7 +86,8 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    //implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.1.1")
     // Compose constraint layout
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     // Compose extended material icons
@@ -107,9 +108,6 @@ dependencies {
     val hiltVersion = "2.46.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    // Timber
-    val timberVersion = "5.0.1"
-    implementation("com.jakewharton.timber:timber:$timberVersion")
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     // KotlinX immutable collections

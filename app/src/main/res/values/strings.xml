@@ -9,16 +9,24 @@
 
     <string name="appbar_title">Routes</string>
 
-    <string name="drawer_title">A demo app TODO TODO
-        \n\nTODO TODO
-        \n\nTODO TODO
-        \n\nTODO TODO
-        \n\nTODO TODO
+    <string name="drawer_title">A demo app for displaying a list of routes
+        \n\and previewing individual routes.
+        \n\nThe routes data is duplicated to allow for pagination.
+        \n\nThe route details shows the waypoints, corresponding stop markers, as well we routing details.
+        \n\nThe routing details include step-by-step details including the students to pick at each stop.
+        \n\nClick on individual stops to pan the map to the corresponding location.
+        \n\nGeoApify is used to retrieve detailed routing and Google Maps is used to visualize an interactive map of the route.
+        \n\nStack/architecture: clean MVVM architecture, Jetpack Compose, Retrofit, Hilt, KotlinX serialization, DataStore and others.
+    </string>
+
+    <string name="error_keys_missing">API keys missing</string>
+    <string name="no_keys_warning">API keys are missing, please ensure to add in your local.properties file:
+        \n\n1.) Add your Google Maps key as MAPS_API_KEY=YOUR_KEY
+        \n\n2.) Add your GeoApify key as GEOAPIFY_API_KEY=YOUR_KEY
     </string>
 
     <string name="dark_mode">Dark Mode</string>
     <string name="use_system_theme">Use system theme</string>
-
 
     <!-- Route details-->
     <string name="sub_students_count">%d students</string>
@@ -28,5 +36,10 @@
     <string name="time_students_desc_count_one">%s, 1 student</string>
     <string name="time_students_desc_count_multiple">%s, %d students</string>
     <string name="details_loading_routing">Loading routing…</string>
+    <string name="details_loading_route">Loading route…</string>
+
+    <string name="show_markers">Show markers</string>
+
+    <string name="sub_details_stops_students_time">%d stops, %d students (%s, %s)"</string>
 
 </resources>
