@@ -2,11 +2,8 @@ package com.rokoblak.routeplanner.ui.common
 
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.LegDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.LegSection
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteContentUIState
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteHeaderDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteLegsListingData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsData
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsDisplay
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteScaffoldUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.StepDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.StudentDisplayData
@@ -28,7 +25,7 @@ object PreviewDataUtils {
         }
     }
 
-    val legsListing = RouteLegsListingData(
+    private val legsListing = RouteLegsListingData(
         items = (0..10).map { legIdx ->
             val leg = leg(legIdx)
             val steps = (0..10).map {
@@ -63,15 +60,6 @@ object PreviewDataUtils {
         subtitle = TextRes.Text("Subtitle"),
         mainContent = RouteScaffoldUIState.MainContentState.Error(type = RouteScaffoldUIState.MainContentState.Error.Type.NoKeys),
         sheetContent = null,
-    )
-
-    fun routeHeader() = RouteHeaderDisplayData(
-        center = RouteHeaderDisplayData.Point(-1.0, -1.0),
-        polylines = emptyList(),
-        markers = emptyList(),
-        subtitle = TextRes.Text("Subtitle"),
-        extraSubtitle = TextRes.Text("Extra subtitle"),
-        showNoKeysWarning = false,
     )
 
     fun step(idx: Int = 1, parentIdx: Int = 1) = StepDisplayData(

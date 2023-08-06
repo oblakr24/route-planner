@@ -2,6 +2,7 @@ package com.rokoblak.routeplanner.routedetails
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.rokoblak.routeplanner.R
 import com.rokoblak.routeplanner.data.repo.model.LoadErrorType
 import com.rokoblak.routeplanner.data.repo.model.LoadableResult
 import com.rokoblak.routeplanner.domain.model.ExpandedRouteDetails
@@ -10,10 +11,10 @@ import com.rokoblak.routeplanner.domain.model.RoutePoint
 import com.rokoblak.routeplanner.domain.usecases.RouteDetailsUseCase
 import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsAction
-import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsUIState
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsViewModel
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteContentUIState
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteHeaderDisplayData
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsData
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteScaffoldUIState
+import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteScaffoldUIState.MainContentState.Error.Type
 import com.rokoblak.routeplanner.util.TestCoroutineRule
 import com.rokoblak.routeplanner.util.TestUtils
 import com.rokoblak.routeplanner.util.awaitItem
@@ -27,7 +28,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
-import com.rokoblak.routeplanner.R
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -60,7 +60,11 @@ class RouteDetailsViewModelTest {
             useCase = listingUseCase,
         )
 
-        val expected = expectedUIstate(RouteContentUIState.Loading)
+        val expected = RouteScaffoldUIState(
+            title = routeName,
+            subtitle = TextRes.Res(R.string.details_loading_route),
+            mainContent = RouteScaffoldUIState.MainContentState.Loading
+        )
         vm.uiState.test {
             assertEquals(expected, this.awaitItem())
             cancelAndIgnoreRemainingEvents()
@@ -108,39 +112,42 @@ class RouteDetailsViewModelTest {
             useCase = listingUseCase,
         )
 
-        val expected = expectedUIstate(RouteContentUIState.Loading)
+        val expected = RouteScaffoldUIState(
+            title = routeName,
+            subtitle = TextRes.Res(R.string.details_loading_route),
+            mainContent = RouteScaffoldUIState.MainContentState.Loading
+        )
         vm.uiState.test {
             assertEquals(expected, this.awaitItem())
 
-            val expectedError = expectedUIstate(RouteContentUIState.Error(isNoConnection = true))
+            val expectedError = RouteScaffoldUIState(
+                title = routeName,
+                subtitle = TextRes.Text(""),
+                mainContent = RouteScaffoldUIState.MainContentState.Error(type = Type.NoConnection)
+            )
 
             assertEquals(
                 expectedError,
-                awaitItem { it.content != RouteContentUIState.Loading })
+                awaitItem { it.mainContent != RouteScaffoldUIState.MainContentState.Loading })
 
             vm.onAction(RouteDetailsAction.RetryClicked)
 
-            val expectedAfterRetry = expectedUIstate(
-                RouteContentUIState.Loaded(
-                    header = RouteHeaderDisplayData(
-                        showNoKeysWarning = false,
-                        center = RouteHeaderDisplayData.Point(0.0, 0.0),
+            val expectedAfterRetry = RouteScaffoldUIState(
+                title = routeName,
+                subtitle = TextRes.Res.create(R.string.sub_details_stops_students, 1, 0),
+                mainContent = RouteScaffoldUIState.MainContentState.Loaded(
+                    data = RouteMapsData(
+                        center = RouteMapsData.Point(0.0, 0.0),
                         markers = emptyList(),
                         polylines = emptyList(),
-                        subtitle = TextRes.Res(R.string.sub_details_stops_students, listOf(1, 0)),
-                        extraSubtitle = TextRes.Res(R.string.details_loading_routing),
-                    ),
-                    listingData = null,
-                    loadingRouting = true,
+                    )
                 )
             )
 
             assertEquals(
                 expectedAfterRetry,
-                awaitItem { it.content is RouteContentUIState.Loaded })
+                awaitItem { it.mainContent is RouteScaffoldUIState.MainContentState.Loaded })
         }
     }
 
-    private fun expectedUIstate(inner: RouteContentUIState) =
-        RouteDetailsUIState(title = routeName, inner)
 }

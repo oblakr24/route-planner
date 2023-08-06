@@ -13,8 +13,6 @@ import com.rokoblak.routeplanner.domain.model.Student
 import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.LegDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.LegSection
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteContentUIState
-import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteHeaderDisplayData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteLegsListingData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteMapsData
 import com.rokoblak.routeplanner.ui.feature.routedetails.composables.RouteScaffoldUIState
@@ -37,84 +35,6 @@ object RouteDetailsUIMapper {
     )
 
     private fun Array<Color>.pickForIdx(idx: Int) = this[(idx % size + size) % size]
-
-    fun createUIState(
-        details: ExpandedRouteDetails,
-        expandedState: Map<String, Boolean>
-    ): RouteContentUIState.Loaded = with(details) {
-        val center = RouteHeaderDisplayData.Point(lat = firstPoint.lat, long = firstPoint.long)
-
-        val polylines = pathPoints.mapIndexed { idx, segment ->
-            RouteHeaderDisplayData.PolylineSegment(
-                points = segment.map {
-                    LatLng(it.lat, it.long)
-                },
-                color = polyLineSegmentColors.pickForIdx(idx),
-            )
-
-        }
-
-        val markers = waypoints.mapIndexed { idx, pt ->
-            val studentsCount = if (idx == 0) {
-                studentsToPickUpAtStart
-            } else {
-                legs.getOrNull(idx)?.studentsToPickUpAtEnd
-            }?.size ?: 0
-            val subtitle = if (studentsCount > 0) TextRes.Res.create(
-                R.string.sub_students_count,
-                studentsCount
-            ) else null
-            RouteHeaderDisplayData.Point(
-                pt.lat,
-                pt.long,
-                pt.name?.let { TextRes.Text(it) },
-                subtitle = subtitle
-            )
-        }
-
-        val listing = if (legs.isNotEmpty()) {
-            val itemsPairs = legs.mapIndexed { idx, leg ->
-                val steps = leg.steps.map { step ->
-                    step.toUI()
-                }
-                val legData = leg.toUI(if (idx == 0) studentsToPickUpAtStart else null)
-                val expanded = expandedState[leg.id] ?: false
-                LegSection(
-                    expanded = expanded, legData,
-                    if (expanded) steps.toImmutableList() else persistentListOf()
-                )
-            }.toImmutableList()
-
-            RouteLegsListingData(itemsPairs)
-        } else {
-            null
-        }
-
-        val subtitle =
-            TextRes.Res.create(R.string.sub_details_stops_students, route.stops.size, totalStudents)
-        val extraSubtitle = if (distanceInM != null && totalTime != null) {
-            TextRes.Text(formatDistanceAndTime(distanceInM, totalTime))
-        } else {
-            if (details.loadingRouting) TextRes.Res(R.string.details_loading_routing) else TextRes.Text(
-                ""
-            )
-        }
-
-        val header = RouteHeaderDisplayData(
-            showNoKeysWarning = BuildConfig.HAS_API_KEYS.not(),
-            center = center,
-            polylines = polylines,
-            markers = markers,
-            subtitle = subtitle,
-            extraSubtitle = extraSubtitle,
-        )
-
-        return RouteContentUIState.Loaded(
-            header = header,
-            listingData = listing,
-            loadingRouting = loadingRouting,
-        )
-    }
 
     fun createScaffoldSubtitle(
         state: LoadableResult<ExpandedRouteDetails>
@@ -255,7 +175,7 @@ object RouteDetailsUIMapper {
         }
     )
 
-    fun formatDistanceAndTime(distanceInM: Int, time: Duration): String {
+    private fun formatDistanceAndTime(distanceInM: Int, time: Duration): String {
         if (distanceInM == 0 || time < Duration.ofSeconds(1)) return ""
         return "${metersToDisplay(distanceInM)}, ${time.toDisplay()}"
     }

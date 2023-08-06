@@ -28,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -45,11 +46,14 @@ import com.rokoblak.routeplanner.ui.common.composables.LoadingCell
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsAction
 import com.rokoblak.routeplanner.ui.theme.RoutePlannerTheme
 import com.rokoblak.routeplanner.ui.theme.alpha
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
+
+const val TAG_ROUTE_HEADER = "tag-route-header"
 
 data class RouteScaffoldUIState(
     val title: String,
-    val subtitle: TextRes = TextRes.Res(R.string.details_loading_routing),
+    val subtitle: TextRes = TextRes.Res(R.string.details_loading_route),
     val mainContent: MainContentState = MainContentState.Loading,
     val sheetContent: RouteLegsListingData? = null,
 ) {
@@ -74,6 +78,16 @@ data class RouteScaffoldUIState(
         data class Loaded(val data: RouteMapsData) : MainContentState
     }
 }
+
+data class RouteLegsListingData(
+    val items: ImmutableList<LegSection>,
+)
+
+data class LegSection(
+    val expanded: Boolean,
+    val leg: LegDisplayData,
+    val steps: ImmutableList<StepDisplayData>,
+)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -194,7 +208,7 @@ fun RouteDetailsScaffold(
 @Composable
 private fun TitleBar(title: String, subtitle: TextRes, onBackClicked: () -> Unit) {
     ConstraintLayout(
-        modifier = Modifier
+        modifier = Modifier.testTag(TAG_ROUTE_HEADER)
             .background(Color.Black.alpha(0.15f))
             .fillMaxWidth()
             .wrapContentHeight()
