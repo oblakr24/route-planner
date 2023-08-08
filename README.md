@@ -7,6 +7,14 @@ Made using the latest Android development stack and architectural and UI develop
 The app will load pages automatically once the user scrolls far enough (close enough to the last item). 
 The pages are "faked" on the app-side to accommodate enough data for pagination, as the current API does not support pagination (and only returns two items).
 
+**NOTE**: When building the app, you need to provide two API keys to the build process by adding in your local.properties the following two lines:
+MAPS_API_KEY=YOUR_MAPS_KEY_HERE
+GEOAPIFY_API_KEY=YOUR_GEOAPIFY_KEY_HERE
+
+Instructions:
+[Geoapify API key instructions]([https://developer.android.com/jetpack/compose](https://www.geoapify.com/get-started-with-maps-api)) 
+[Google Maps API key instructions](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+
 ## Video
 
 ![rec2](https://github.com/oblakr24/route-planner/assets/32245831/c16c83a2-2123-416c-8562-c50814f31928)
