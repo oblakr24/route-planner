@@ -28,7 +28,9 @@ data class StepDisplayData(
 )
 
 @Composable
-fun StepDisplay(data: StepDisplayData, curveBack: Boolean = false, isLast: Boolean = false,
+fun StepDisplay(data: StepDisplayData,
+                curveBack: Boolean = false,
+                isLast: Boolean = false,
                 modifier: Modifier = Modifier) {
     val pathColor = MaterialTheme.colorScheme.primary
     Column(modifier = modifier.drawWithCache {

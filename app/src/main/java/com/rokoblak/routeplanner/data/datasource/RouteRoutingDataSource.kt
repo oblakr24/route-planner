@@ -37,8 +37,8 @@ class AppRouteRoutingDataSource @Inject constructor(
 
             val waypoints = details.stops.map { it.coord }
             val studentsPerIdx = details.stops.mapIndexed { index, stop ->
-                // index+1 to associate it with the end of the leg coresponding to this stop
-                index + 1 to stop.students
+                // index- 1 to associate it with the end of the leg coresponding to this stop
+                index - 1 to stop.students
             }.toMap()
             val routingResult = loadRouting(waypoints, studentsPerIdx)
             emit(routingResult.toLoadable())

@@ -25,7 +25,7 @@ object PreviewDataUtils {
         }
     }
 
-    private val legsListing = RouteLegsListingData(
+    val legsListing = RouteLegsListingData(
         items = (0..10).map { legIdx ->
             val leg = leg(legIdx)
             val steps = (0..10).map {

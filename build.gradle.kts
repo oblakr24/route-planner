@@ -5,7 +5,6 @@ buildscript {
     repositories { mavenCentral() }
 
     dependencies {
-        classpath("app.cash.molecule:molecule-gradle-plugin:1.1.0")
         val kotlinVersion = "1.8.21"
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
         classpath(kotlin("serialization", version = kotlinVersion))

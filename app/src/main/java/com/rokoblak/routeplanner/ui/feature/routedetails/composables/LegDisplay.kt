@@ -2,7 +2,6 @@ package com.rokoblak.routeplanner.ui.feature.routedetails.composables
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,18 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddLocation
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.LocationSearching
 import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.ShareLocation
-import androidx.compose.material.icons.filled.StopCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -33,15 +26,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.rokoblak.routeplanner.R
 import com.rokoblak.routeplanner.ui.common.AppThemePreviews
 import com.rokoblak.routeplanner.ui.common.PreviewDataUtils
 import com.rokoblak.routeplanner.ui.common.TextRes
 import com.rokoblak.routeplanner.ui.theme.RoutePlannerTheme
-import com.rokoblak.routeplanner.ui.theme.alpha
 import kotlinx.collections.immutable.ImmutableList
 
 data class LegDisplayData(
@@ -130,22 +124,31 @@ fun LegDisplay(
 
                 if (!expanded) {
                     Text(
-                        modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         text = data.subtitleCollapsed.resolve(),
                         style = MaterialTheme.typography.labelSmall,
                     )
                 } else {
                     Text(
-                        modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                         text = data.subtitleExpanded.resolve(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelSmall,
                     )
                     if (data.students.isNotEmpty()) {
                         Text(
-                            modifier = Modifier.padding(top = 4.dp, start = 16.dp).fillMaxWidth(),
-                            text = "${data.students.size} student(s) to pick up",
+                            modifier = Modifier
+                                .padding(top = 4.dp, start = 16.dp)
+                                .fillMaxWidth(),
+                            text = stringResource(
+                                R.string.details_num_students_to_pick_up,
+                                data.students.size
+                            ),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.labelSmall,
                             fontStyle = FontStyle.Italic,

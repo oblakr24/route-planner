@@ -41,5 +41,6 @@
     <string name="show_markers">Show markers</string>
 
     <string name="sub_details_stops_students_time">%d stops, %d students (%s, %s)"</string>
+    <string name="details_num_students_to_pick_up">%1$s student(s) to pick up</string>
 
 </resources>

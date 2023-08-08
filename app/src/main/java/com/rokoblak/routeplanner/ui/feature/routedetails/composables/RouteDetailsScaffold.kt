@@ -1,37 +1,19 @@
 package com.rokoblak.routeplanner.ui.feature.routedetails.composables
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -45,11 +27,8 @@ import com.rokoblak.routeplanner.ui.common.composables.LargeLoadingCell
 import com.rokoblak.routeplanner.ui.common.composables.LoadingCell
 import com.rokoblak.routeplanner.ui.feature.routedetails.RouteDetailsAction
 import com.rokoblak.routeplanner.ui.theme.RoutePlannerTheme
-import com.rokoblak.routeplanner.ui.theme.alpha
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
-
-const val TAG_ROUTE_HEADER = "tag-route-header"
 
 data class RouteScaffoldUIState(
     val title: String,
@@ -89,14 +68,13 @@ data class LegSection(
     val steps: ImmutableList<StepDisplayData>,
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RouteDetailsScaffold(
     state: RouteScaffoldUIState,
     onBackClicked: () -> Unit,
     onAction: (RouteDetailsAction) -> Unit
 ) {
-
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
@@ -115,60 +93,21 @@ fun RouteDetailsScaffold(
         sheetPeekHeight = 128.dp,
         containerColor = MaterialTheme.colorScheme.background,
         sheetContent = {
-
             if (state.sheetContent != null && cameraPositionState != null) {
                 val lazyListState = rememberLazyListState()
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(350.dp),
-                    state = lazyListState,
-                ) {
-                    val items = state.sheetContent.items
-                    items.forEachIndexed { index, section ->
-                        val lastSection = index == items.lastIndex
-                        item(key = section.leg.id) {
-                            LegDisplay(modifier = Modifier.animateItemPlacement(),
-                                data = section.leg,
-                                expanded = section.expanded,
-                                isFirst = index == 0,
-                                isLast = lastSection && section.expanded.not(),
-                                onMarkerClicked = {
-                                    coroutineScope.launch {
-                                        lazyListState.animateScrollToItem(0)
-                                        scaffoldState.bottomSheetState.partialExpand()
-                                        val destinationLatLng =
-                                            LatLng(section.leg.markerLat, section.leg.markerLong)
-                                        cameraPositionState.animate(
-                                            update = CameraUpdateFactory.newLatLng(destinationLatLng),
-                                            durationMs = 250,
-                                        )
-                                    }
-                                },
-                                onExpandClicked = {
-                                    onAction(RouteDetailsAction.SectionExpandCollapseClicked(section.leg.id))
-                                })
-                        }
-                        items(
-                            count = section.steps.size,
-                            key = { section.steps[it].id },
-                            itemContent = { idx ->
-                                val step = section.steps[idx]
-                                StepDisplay(
-                                    modifier = Modifier.animateItemPlacement(),
-                                    curveBack = !lastSection && idx == section.steps.lastIndex,
-                                    isLast = lastSection && idx == section.steps.lastIndex,
-                                    data = step,
-                                )
-                            }
+                RoutingStepsListing(data = state.sheetContent, lazyListState = lazyListState, onMarkerClicked = { destLatLng ->
+                    coroutineScope.launch {
+                        lazyListState.animateScrollToItem(0)
+                        scaffoldState.bottomSheetState.partialExpand()
+                        cameraPositionState.animate(
+                            update = CameraUpdateFactory.newLatLng(destLatLng),
+                            durationMs = 250,
                         )
                     }
-
-                    item {
-                        Spacer(modifier = Modifier.height(12.dp))
-                    }
-                }
+                }, onExpandClicked = { legId ->
+                    onAction(RouteDetailsAction.SectionExpandCollapseClicked(legId))
+                })
 
             } else {
                 LoadingCell()
@@ -200,75 +139,8 @@ fun RouteDetailsScaffold(
                 }
             }
 
-            TitleBar(title = state.title, subtitle = state.subtitle, onBackClicked = onBackClicked)
+            RouteDetailsTitleBar(title = state.title, subtitle = state.subtitle, onBackClicked = onBackClicked)
         }
-    }
-}
-
-@Composable
-private fun TitleBar(title: String, subtitle: TextRes, onBackClicked: () -> Unit) {
-    ConstraintLayout(
-        modifier = Modifier.testTag(TAG_ROUTE_HEADER)
-            .background(Color.Black.alpha(0.15f))
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(top = 8.dp, bottom = 4.dp, start = 4.dp, end = 4.dp)
-    ) {
-
-        val (backBtnRef, titleRef, subtitleRef) = createRefs()
-
-        Box(
-            modifier = Modifier
-                .padding(8.dp)
-                .constrainAs(backBtnRef) {
-                    width = Dimension.wrapContent
-                    height = Dimension.wrapContent
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                }
-                .size(36.dp)
-                .background(Color.Black.alpha(0.20f), shape = CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            IconButton(modifier = Modifier
-                .size(36.dp),
-                onClick = {
-                    onBackClicked()
-                }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBackIosNew,
-                    tint = Color.Black,
-                    contentDescription = "Back"
-                )
-            }
-        }
-
-        Text(
-            modifier = Modifier.constrainAs(titleRef) {
-                width = Dimension.wrapContent
-                height = Dimension.wrapContent
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            text = title,
-            color = Color.Black,
-            style = MaterialTheme.typography.titleMedium,
-        )
-
-        Text(
-            modifier = Modifier.constrainAs(subtitleRef) {
-                width = Dimension.wrapContent
-                height = Dimension.wrapContent
-                top.linkTo(titleRef.bottom)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            text = subtitle.resolve(),
-            color = Color.Black,
-            style = MaterialTheme.typography.labelMedium,
-        )
     }
 }
 

@@ -51,7 +51,6 @@ fun StudentDisplay(data: StudentDisplayData, modifier: Modifier = Modifier) {
     }
 }
 
-
 @Composable
 @AppThemePreviews
 fun StudentDisplayPreview() {
