@@ -47,13 +47,16 @@ The pages are "faked" on the app-side to accommodate enough data for pagination,
 
 ## Screenshots
 
-<b>Routes Listing</b>
+<b>Routes Listing & Drawer</b>
 
 <p align="center">
-  <img src="https://github.com/oblakr24/route-planner/assets/32245831/f8c5c6db-eb71-4367-9adf-96a63e9fe3db" width="270" height="570">
-  <img src="https://github.com/oblakr24/route-planner/assets/32245831/a6cb7ccd-6f0d-43e8-bc44-ae9738db52c1" width="270" height="570">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/f8c5c6db-eb71-4367-9adf-96a63e9fe3db" width="270" height="480">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/a6cb7ccd-6f0d-43e8-bc44-ae9738db52c1" width="270" height="480">
 </p>
 
 <b>Route details</b>
 
-
+<p align="center">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/f13eceb4-2c55-4fe1-b201-545b257f5df5" width="270" height="480">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/c597cfeb-bf8d-48b3-b6a1-cbc55210dc77" width="270" height="480">
+</p>
