@@ -9,10 +9,12 @@ The pages are "faked" on the app-side to accommodate enough data for pagination,
 
 **NOTE**: When building the app, you need to provide two API keys to the build process by adding in your local.properties the following two lines:
 MAPS_API_KEY=YOUR_MAPS_KEY_HERE
+
 GEOAPIFY_API_KEY=YOUR_GEOAPIFY_KEY_HERE
 
 Instructions:
 [Geoapify API key instructions](https://www.geoapify.com/get-started-with-maps-api)
+
 [Google Maps API key instructions](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
 
 ## Video
