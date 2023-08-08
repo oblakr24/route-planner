@@ -8,6 +8,7 @@ The app will load pages automatically once the user scrolls far enough (close en
 The pages are "faked" on the app-side to accommodate enough data for pagination, as the current API does not support pagination (and only returns two items).
 
 **NOTE**: When building the app, you need to provide two API keys to the build process by adding in your local.properties the following two lines:
+
 MAPS_API_KEY=YOUR_MAPS_KEY_HERE
 
 GEOAPIFY_API_KEY=YOUR_GEOAPIFY_KEY_HERE
