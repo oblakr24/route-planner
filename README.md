@@ -36,7 +36,6 @@ The pages are "faked" on the app-side to accommodate enough data for pagination,
 - [Maps Compose](https://developers.google.com/maps/documentation/android-sdk/maps-compose) for map display
 - [Geoapify](https://www.geoapify.com/routing-api) for routing calculation
 - [Hilt](https://dagger.dev/hilt/) for dependency injection
-- [Coil](https://coil-kt.github.io/coil/) for image loading
 - [KotlinX Serialization](https://github.com/Kotlin/kotlinx.serialization) for serialization and deserialization of models into and from files
 - [Retrofit](https://github.com/square/retrofit) for network requests
 - [Extended Material icons](https://developer.android.com/jetpack/androidx/releases/compose-material) for vector images
