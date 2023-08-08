@@ -14,6 +14,7 @@ MAPS_API_KEY=YOUR_MAPS_KEY_HERE
 GEOAPIFY_API_KEY=YOUR_GEOAPIFY_KEY_HERE
 
 Instructions:
+
 [Geoapify API key instructions](https://www.geoapify.com/get-started-with-maps-api)
 
 [Google Maps API key instructions](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
