@@ -9,7 +9,7 @@ The pages are "faked" on the app-side to accommodate enough data for pagination,
 
 ## Video
 
-
+![rec2](https://github.com/oblakr24/route-planner/assets/32245831/c16c83a2-2123-416c-8562-c50814f31928)
 
 ## Features
 
@@ -49,7 +49,10 @@ The pages are "faked" on the app-side to accommodate enough data for pagination,
 
 <b>Routes Listing</b>
 
-
+<p align="center">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/f8c5c6db-eb71-4367-9adf-96a63e9fe3db" width="270" height="570">
+  <img src="https://github.com/oblakr24/route-planner/assets/32245831/a6cb7ccd-6f0d-43e8-bc44-ae9738db52c1" width="270" height="570">
+</p>
 
 <b>Route details</b>
 
