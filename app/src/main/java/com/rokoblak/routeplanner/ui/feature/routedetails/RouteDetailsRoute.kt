@@ -16,7 +16,7 @@ private const val KEY_NAME = "key-name"
 object RouteDetailsRoute : NavRoute<RouteDetailsViewModel> {
 
     override val route =
-        "repo/{$KEY_ID}?$KEY_NAME={$KEY_NAME}"
+        "route/{$KEY_ID}?$KEY_NAME={$KEY_NAME}"
 
     fun get(input: Input): String = route
         .replace("{$KEY_ID}", input.routeId)

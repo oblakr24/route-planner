@@ -61,7 +61,7 @@ class AppRouteDetailsRepo @Inject constructor(
         val firstStop = details.firstStopCoord
 
         val waypoints = details.stops.mapIndexed { idx, stop ->
-            val stopName = routingDetails?.legs?.getOrNull(idx-1)?.name ?: routingDetails?.startName ?: "Start"
+            val stopName = routingDetails?.legs?.getOrNull(idx - 1)?.name ?: routingDetails?.startName ?: "Start"
             RoutePoint(lat = stop.coord.lat, long = stop.coord.long, name = stopName)
         }
         val pathPoints = routingDetails?.points ?: listOf(waypoints)

@@ -1,6 +1,6 @@
 package com.rokoblak.routeplanner.data.datasource
 
-import com.rokoblak.routeplanner.data.repo.RoutesModelMapper.toDomain
+import com.rokoblak.routeplanner.data.repo.RoutesModelMapper
 import com.rokoblak.routeplanner.data.repo.model.CallResult
 import com.rokoblak.routeplanner.data.repo.model.LoadErrorType
 import com.rokoblak.routeplanner.data.repo.model.LoadableResult
@@ -37,7 +37,7 @@ class AppRouteDetailsRemoteDataSource @Inject constructor(
     private suspend fun loadDetails(routeId: String) = CallResult.wrappedSafeCall {
         api.loadRouteDetails(routeId = routeId)
     }.flatMap {
-        val details = it.toDomain() ?: return@flatMap CallResult.Error(LoadErrorType.ApiError("No stops provided"))
+        val details = RoutesModelMapper.mapDetails(it) ?: return@flatMap CallResult.Error(LoadErrorType.ApiError("No stops provided"))
         CallResult.Success(details)
     }
 }

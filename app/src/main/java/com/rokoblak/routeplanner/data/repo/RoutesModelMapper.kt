@@ -14,7 +14,7 @@ import java.time.Duration
 
 object RoutesModelMapper {
 
-    fun RoutesResponse.toDomain(): List<Route> {
+    fun mapRoutes(response: RoutesResponse): List<Route> = with(response) {
         return data.map { apiRoute ->
             Route(
                 routeId = apiRoute.orgId,
@@ -24,7 +24,7 @@ object RoutesModelMapper {
         }
     }
 
-    fun RoutingResponse.toDomain(studentsPerIdx: Map<Int, List<Student>>, pointsPerIdx: Map<Int, RoutePoint>): RouteRoutingDetails? {
+    fun mapRoutingDetails(response: RoutingResponse, studentsPerIdx: Map<Int, List<Student>>, pointsPerIdx: Map<Int, RoutePoint>): RouteRoutingDetails? = with(response) {
         val result = results.firstOrNull() ?: return null
         val points = result.geometry.map { linePoints ->
             linePoints.map { pt ->
@@ -51,7 +51,7 @@ object RoutesModelMapper {
         )
     }
 
-    fun RouteDetailsResponse.toDomain(): RouteDetails? {
+    fun mapDetails(response: RouteDetailsResponse): RouteDetails? = with(response) {
         val firstStop = stops.firstOrNull() ?: return null
         return RouteDetails(
             id = id,

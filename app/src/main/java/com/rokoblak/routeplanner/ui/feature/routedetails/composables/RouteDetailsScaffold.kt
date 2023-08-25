@@ -115,7 +115,6 @@ fun RouteDetailsScaffold(
         }) {
         Box(
             Modifier
-                .background(Color.Red)
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
         ) {

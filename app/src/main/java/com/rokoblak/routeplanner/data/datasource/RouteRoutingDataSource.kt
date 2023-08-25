@@ -1,7 +1,7 @@
 package com.rokoblak.routeplanner.data.datasource
 
 import com.rokoblak.routeplanner.BuildConfig
-import com.rokoblak.routeplanner.data.repo.RoutesModelMapper.toDomain
+import com.rokoblak.routeplanner.data.repo.RoutesModelMapper
 import com.rokoblak.routeplanner.data.repo.model.CallResult
 import com.rokoblak.routeplanner.data.repo.model.LoadErrorType
 import com.rokoblak.routeplanner.data.repo.model.LoadableResult
@@ -52,7 +52,7 @@ class AppRouteRoutingDataSource @Inject constructor(
     }.flatMap {
 
         val idxToPoints = waypoints.withIndex().associate { (idx, pt) -> idx to pt }
-        val result = it.toDomain(studentsPerIdx, idxToPoints)
+        val result = RoutesModelMapper.mapRoutingDetails(it, studentsPerIdx, idxToPoints)
             ?: return@flatMap CallResult.Error(LoadErrorType.ApiError("No results in response"))
         CallResult.Success(result)
     }

@@ -1,6 +1,6 @@
 package com.rokoblak.routeplanner.data.datasource
 
-import com.rokoblak.routeplanner.data.repo.RoutesModelMapper.toDomain
+import com.rokoblak.routeplanner.data.repo.RoutesModelMapper
 import com.rokoblak.routeplanner.data.repo.model.CallResult
 import com.rokoblak.routeplanner.data.repo.model.LoadErrorType
 import com.rokoblak.routeplanner.data.repo.model.RoutesPage
@@ -34,7 +34,7 @@ class AppRoutesRemoteDataSource @Inject constructor(
 //            api.listRoutes()
 //        }.map {
 //            RoutesPage(
-//                routes = it.toDomain(page),
+//                routes = RoutesModelMapper.mapRoutes(it),
 //                page = page,
 //                end = true,
 //            )
@@ -43,7 +43,7 @@ class AppRoutesRemoteDataSource @Inject constructor(
         // Real call + extra data here
         return api.listRoutesWithExtraData(pageIdx = page).map {
             RoutesPage(
-                routes = it.toDomain(),
+                routes = RoutesModelMapper.mapRoutes(it),
                 page = page,
                 end = if (it.continuePaginating) it.data.isEmpty() else true,
             )
